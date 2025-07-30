@@ -1,0 +1,4 @@
+# 전체 .db 파일 무시하려면 (선택)
+*.db
+stock_history.db
+stock_history2.db
