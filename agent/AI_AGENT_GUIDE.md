@@ -13,19 +13,19 @@ X-NCP-CLOVASTUDIO-REQUEST-ID: test-local-123
 
 # 코드 설명
 
-rag_stock_pipeline.py  
+###rag_stock_pipeline.py  
 - 역할: 종목명 및 주식 관련 용어의 전처리 파이프라인을 담당합니다.   
 - 주요 기능: 종목 약어 및 주식 은어(슬랭)를 표준화된 형태로 정제합니다.  
 
 SparseRetriever 와 DenseRetriever의 앙상블 기법을 활용하여 변환할 종목 은어 리스트 추출 후 리랭커를 통해서 제일 적합한 단어를 선택 
 
-noTask.py  
+###noTask.py  
 - 역할: 분류되지 않은 사용자 질문(미분류 테스크)을 처리하고, 재작성하여 의미를 명확히 합니다.  
 - 주요 기능: 시스템이 정의한 주요 테스크(단순 조회, 조건 검색, 시그널 감지)에 해당하지 않는 질문을 '테스크화'하는 로직을 수행합니다.  
 
 주가 상승/하락과 관련된 질문을 RSI, 골든/데드크로스 등의 구체적인 시그널 형태로 변환하는 기능을 포함합니다.
 
-task_classification.py  
+###task_classification.py  
 - 역할: 사용자 질문의 의도를 분석하여 사전에 정의된 테스크 중 하나로 분류합니다.  
 - 주요 기능: 사용자 질문을 다음 세 가지 테스크 유형 중 하나로 분류합니다:   
 
@@ -35,13 +35,13 @@ task_classification.py
 
     - 시그널 감지: 기술적 지표나 시장 시그널을 감지하는 질문 (예: "골든크로스 발생한 종목 알려줘")
 
-stock_db.py, scheduler.py
+###stock_db.py, scheduler.py
 - 역할: 주가 데이터를 관리하고 업데이트를 자동화   
 - 주요 기능: stock_db.py: 주가 데이터를 데이터베이스에 저장하고 관리하는 로직을 포함 
 - scheduler.py: 매일 장 마감 시점인 17:30에 자동으로 실행되도록 설정되어 하루치 주가 데이터를 데이터베이스에 저장하는 역할
 
 
-graph.py
+###graph.py
 역할: 전체 질의응답 처리 흐름을 연결하는 메인 워크플로우를 정의하며, LangGraph 기반으로 구축
 처리 흐름 
 ```사용자 질문 입력 (API) 
@@ -54,6 +54,11 @@ graph.py
        → 미분류 처리기 (`noTask.py`)
        → 에이전트로 연결
 ```
+### agent.py
+처리 흐름:
+<img width="739" height="355" alt="image" src="https://github.com/user-attachments/assets/18fc2fe2-3aec-47b8-9741-d2d38c6b6824" />
+
+
 
 # AI 에이전트 주식 도구 사용 가이드
 
