@@ -1,4 +1,8 @@
 # API 콜 양식 
+
+`http://175.45.200.187:8000/agent?question=삼성전자 종가를 알려줘
+`
+의 형식으로 작성해주세요
 ```
 GET /agent?question=거래량이 전날 대비 15% 이상 오른 종목을 모두 보여줘 HTTP/1.1
 Host: your.server.ip:8000
