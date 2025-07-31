@@ -1,4 +1,55 @@
+# API 콜 양식 
+
+GET /agent?question=거래량이 전날 대비 15% 이상 오른 종목을 모두 보여줘 HTTP/1.1
+Host: your.server.ip:8000
+Authorization: Bearer nv-xxxxxxxxxxxxxxxxxxxxxxxx
+X-NCP-CLOVASTUDIO-REQUEST-ID: test-local-123
+
+
+🧠 코드 설명
+
+📁 rag_stock_pipeline.py
+	•	종목 약어 및 주식 은어를 정제합니다.
+	•	SparseRetriever와 DenseRetriever의 앙상블을 통해 변환할 종목 은어를 채택합니다.
+
+⸻
+
+📁 noTask.py
+	•	테스크(단순 조회 / 조건 검색 / 시그널 감지)에 해당하지 않는 미분류 질문을 테스크화합니다.
+	•	주가 상승/하락을 RSI, 골든/데드크로스 등의 시그널 형태로 변환합니다.
+
+⸻
+
+📁 task_classification.py
+	•	질문을 다음 중 하나로 테스크 분류합니다:
+	•	단순 조회
+	•	조건 검색
+	•	시그널 감지
+
+⸻
+
+📁 stock_db.py, scheduler.py
+	•	매일 장 마감 시점 (17:30) 에 자동으로 실행되어 하루치 주가 데이터를 DB에 저장합니다.
+	•	cron 기반의 스케줄링 또는 수동 실행 가능
+
+⸻
+
+📁 graph.py
+	•	전체 처리 흐름을 연결한 LangGraph 기반 그래프입니다.
+	•	처리 순서:
+사용자 질문 입력 (API) 
+ → 단어 전처리 (종목 약어, 주식 은어 정제)
+ → 테스크 분류기 
+ → 에이전트 호출
+ → 결과 생성
+
+   └─ 미분류된 테스크인 경우:
+       → 미분류 처리기 (`noTask.py`)
+       → 에이전트로 연결
+
+
 # AI 에이전트 주식 도구 사용 가이드
+
 
 이 가이드는 AI 에이전트가 주식 분석 도구들을 효과적으로 사용할 수 있도록 작성되었습니다.
 
